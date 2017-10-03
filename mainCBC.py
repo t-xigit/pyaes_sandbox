@@ -24,7 +24,9 @@ print(ciphertext)
 
 # The counter mode of operation maintains state, so decryption requires
 # a new instance be created
-aes = pyaes.AESModeOfOperationCTR(key)
+#aes = pyaes.AESModeOfOperationCTR(key)
+#aes = pyaes.AESModeOfOperationCFB(key, iv = iv, segment_size = 8)
+aes = pyaes.AESModeOfOperationOFB(key, iv = iv)
 decrypted = aes.decrypt(ciphertext)
 logging.info("Dedecrypted Message: %s",decrypted)
 # True
