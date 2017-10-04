@@ -1,12 +1,31 @@
 import pyaes
 import os
 import logging
+import csv
 
 logging.basicConfig(filename='example.log',level=logging.DEBUG)
+
+
+with open('key.csv', newline='') as csvfile:
+	logging.info("Opening KEY CSV File")
+	keys = csv.DictReader(csvfile)
+	for row in keys:
+		print(row['id'], row['key'], row['iv'])
+
+		
+def get_key(id):
+	global keys
+	logging.info("Get KEY from CSV File")
+	
+	#print(keys.get('id'))
+
 # A 256 bit (32 byte) key
 key = "This_key_for_demo_purposes_only!"
 # Convert str to byte object
 key = key.encode('utf-8')
+
+
+get_key(2)
 
 # For some modes of operation we need a random initialization vector
 # of 16 bytes
