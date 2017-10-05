@@ -3,21 +3,50 @@ import os
 import logging
 import csv
 
+keys_list = {}
 logging.basicConfig(filename='example.log',level=logging.DEBUG)
 
-
+'''
 with open('key.csv', newline='') as csvfile:
 	logging.info("Opening KEY CSV File")
 	keys = csv.DictReader(csvfile)
 	for row in keys:
 		print(row['id'], row['key'], row['iv'])
-
+'''
 		
+def load_keys():
+	logging.info(load_keys)
+	with open('key.csv', 'r') as f:
+		reader = csv.reader(f)
+		#your_list = list(reader)
+		keys_list = map(tuple, reader)
+		
+		data=[tuple(line) for line in csv.reader(f)]
+		
+		logging.info("key list")
+		logging.info(keys_list)
+
+def filter_value( someList, value ):
+	result = next((i for i, v in enumerate(someList) if v[0] == 2), None)
+	print(result)
+
+	logging.info("filter_value for: %s", value)
+			
 def get_key(id):
-	global keys
-	logging.info("Get KEY from CSV File")
-	
-	#print(keys.get('id'))
+	result= list( filter_value( keys_list, "2" ) )
+	logging.info("Get KEY from List: %s", result)
+	print(id)
+	print(result)
+
+
+load_keys()
+result = next((i for i, v in enumerate(keys_list) if v[0] == "2"), None)
+print("result:") 
+print(result)
+print(keys_list)
+
+#get_key('2')
+
 
 # A 256 bit (32 byte) key
 key = "This_key_for_demo_purposes_only!"
@@ -25,7 +54,7 @@ key = "This_key_for_demo_purposes_only!"
 key = key.encode('utf-8')
 
 
-get_key(2)
+
 
 # For some modes of operation we need a random initialization vector
 # of 16 bytes
